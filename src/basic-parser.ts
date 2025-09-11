@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as readline from "readline";
+import z from 'zod';
 
 /**
  * This is a JSDoc comment. Similar to JavaDoc, it documents a public-facing
@@ -34,4 +35,25 @@ export async function parseCSV(path: string): Promise<string[][]> {
     result.push(values)
   }
   return result
+}
+
+/*
+
+Name, Credits, Email
+Tim Nelson, 10, Tim_Nelson@brown.edu
+Nim Telson, 11, MYAWESOMEEMAIL
+*/
+
+const studentRowSchema = z.tuple(
+  [z.string(), z.coerce.number(), z.email()])
+type StudentRow = z.infer<typeof studentRowSchema>
+
+//  .transform( arr => ({name: arr[0], credits: arr[1], email: arr[2]}))
+
+const studentResult = studentRowSchema.safeParse(
+  ["Tim Nelson", 10, "Tim_Nelson@brown.edu"])
+const student: StudentRow | undefined = studentResult.data
+
+if(student !== undefined) {
+console.log(student[0])
 }
