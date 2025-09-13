@@ -54,16 +54,14 @@ I felt that my initial ideas were easy to test and had valid overlap with the re
 ### 1340 Supplement
 
 - #### 1. Correctness
+Generally, a CSV parser should act as a way to read a CSV file into an array of arrays, each containing labeled fields. It should be able to handle a variety of cases and formats, and utilize a for loop to correctly iterate through the CSV file. As I have written, if the input does not fit the schema format, it will throw an error.
 
 - #### 2. Random, On-Demand Generation
+I would use the random data to ensure that certain edge cases are accounted for, such as extra quotes or commas. I would also run tests to make sure my loops are correctly implementing my schema structure line by line form the CSV file.
 
 - #### 3. Overall experience, Bugs encountered and resolved
-#### Errors/Bugs:
-#### Tests:
-#### How To…
-
-#### Team members and contributions (include cs logins):
+#### Errors/Bugs: I found that the sprint was very different than previous assignments I have done because I was forced to test and learn about the parser before making any corrections or even analyzing the actual functionality. I found that I had small bugs, such as implementing the ZodType<T> correctly, but with testing and documentation review from the assignment I was able to fix that.
 
 #### Collaborators (cslogins of anyone you worked with on this project and/or generative AI): bowen2
-#### Total estimated time it took to complete project: 8 hrs-> 4 for typescrpit documentation review, 3 for testing and parseCSV changes
+#### Total estimated time it took to complete project: 8 hrs-> 4 for typescrpit documentation review, 3 for testing and parseCSV changes, 1 for writing planning and conclusion
 #### Link to GitHub Repo: https://github.com/cs0320-f25/typescript-csv-mciovacc.git
