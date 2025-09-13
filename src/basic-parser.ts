@@ -2,6 +2,11 @@ import * as fs from "fs";
 import * as readline from "readline";
 import z from 'zod';
 
+const personRowSchema = z.tuple(
+  [z.string(), z.coerce.number(), z.email()])
+
+type PersonRow = z.infer<typeof personRowSchema>
+
 /**
  * This is a JSDoc comment. Similar to JavaDoc, it documents a public-facing
  * function for others to use. Most modern editors will show the comment when 
@@ -15,7 +20,7 @@ import z from 'zod';
  * @param path The path to the file being loaded.
  * @returns a "promise" to produce a 2-d array of cell values
  */
-export async function parseCSV(path: string): Promise<string[][]> {
+export async function parseCSV<T>(path: string, schema? : z.ZodType<T>): Promise<(string[] | T)[]> {
   // This initial block of code reads from a file in Node.js. The "rl"
   // value can be iterated over in a "for" loop. 
   const fileStream = fs.createReadStream(path);
@@ -25,35 +30,28 @@ export async function parseCSV(path: string): Promise<string[][]> {
   });
   
   // Create an empty array to hold the results
-  let result = []
+  let result : (string[] | T)[]= [];
   
   // We add the "await" here because file I/O is asynchronous. 
   // We need to force TypeScript to _wait_ for a row before moving on. 
   // More on this in class soon!
   for await (const line of rl) {
     const values = line.split(",").map((v) => v.trim());
-    result.push(values)
+
+    if (!schema) {
+      result.push(values);
+      continue;
+    }
+
+    const parsed = schema.safeParse(values);
+
+    if (!parsed.success) {
+      throw new Error ('Data not valid')
+    }
+
+    result.push(parsed.data);
+
+  
   }
-  return result
-}
-
-/*
-
-Name, Credits, Email
-Tim Nelson, 10, Tim_Nelson@brown.edu
-Nim Telson, 11, MYAWESOMEEMAIL
-*/
-
-const studentRowSchema = z.tuple(
-  [z.string(), z.coerce.number(), z.email()])
-type StudentRow = z.infer<typeof studentRowSchema>
-
-//  .transform( arr => ({name: arr[0], credits: arr[1], email: arr[2]}))
-
-const studentResult = studentRowSchema.safeParse(
-  ["Tim Nelson", 10, "Tim_Nelson@brown.edu"])
-const student: StudentRow | undefined = studentResult.data
-
-if(student !== undefined) {
-console.log(student[0])
+  return result;
 }
