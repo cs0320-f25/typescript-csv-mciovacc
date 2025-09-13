@@ -64,6 +64,6 @@ I felt that my initial ideas were easy to test and had valid overlap with the re
 
 #### Team members and contributions (include cs logins):
 
-#### Collaborators (cslogins of anyone you worked with on this project and/or generative AI):
-#### Total estimated time it took to complete project:
-#### Link to GitHub Repo:  
+#### Collaborators (cslogins of anyone you worked with on this project and/or generative AI): bowen2
+#### Total estimated time it took to complete project: 8 hrs-> 4 for typescrpit documentation review, 3 for testing and parseCSV changes
+#### Link to GitHub Repo: https://github.com/cs0320-f25/typescript-csv-mciovacc.git
